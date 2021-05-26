@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/your_manga_list"
+        android:title="لیست مانگا "  android:icon="@drawable/ic_format_list_bulleted"/>
+
+    <item
+        android:id="@+id/insert_manga"
+        android:icon="@drawable/ic_add_circle"
+        android:title="ثبت مانگا "/>
+
+
+    <item
+        android:id="@+id/about_us"
+        android:title="درباره ی ما "
+        android:icon="@drawable/ic_info"/>
+    <item
+        android:id="@+id/contact_us"
+        android:title="تماس با ما  "
+        android:icon="@drawable/ic_contact_support" />
+
+
+</menu>

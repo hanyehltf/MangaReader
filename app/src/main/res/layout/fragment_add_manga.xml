@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profileInformation.dummy.AddMangaFragment">
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          >
+
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layoutDirection="rtl"
+              android:orientation="vertical"
+              android:layout_gravity="right"
+              android:layout_margin="@dimen/text_margin"
+              >
+              <ImageView
+                  android:layout_gravity="center|top"
+                  android:id="@+id/manga_picture"
+
+                  android:layout_width="100dp"
+                  android:layout_height="100dp"
+                  android:outlineAmbientShadowColor="#7C7575"
+                  android:outlineSpotShadowColor="#7C7575"
+                  android:background="@drawable/circle_shape"
+                  android:layout_marginTop="?actionBarSize"
+
+                  />
+
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/text_margin"
+    android:text="بارگذاری "
+    android:textSize="@dimen/medium_font"
+    android:id="@+id/add_manga_load_pic"
+    android:textColor="@color/white"
+
+    />
+
+          </LinearLayout>
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layoutDirection="rtl"
+              android:orientation="horizontal"
+              android:layout_margin="@dimen/text_margin"
+              >
+              <TextView
+                  android:text="نام مانگا  :"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="@dimen/medium_font"
+                  android:textColor="@color/purple_500"
+                  />
+              <EditText
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/manga_name"
+                  android:textColor="@color/purple_500"
+                  android:textSize="@dimen/medium_font"
+                  android:textDirection="rtl"
+                  android:background="@drawable/edittext"
+                  />
+
+
+
+          </LinearLayout>
+
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layoutDirection="rtl"
+              android:orientation="horizontal"
+              android:layout_margin="@dimen/text_margin"
+              >
+              <TextView
+                  android:text="نویسنده :"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="@dimen/medium_font"
+                  android:textColor="@color/purple_500"
+                  />
+              <EditText
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/manga_writer"
+                  android:textColor="@color/purple_500"
+                  android:textSize="@dimen/medium_font"
+                  android:textDirection="rtl"
+                  android:background="@drawable/edittext"
+                  />
+
+
+
+          </LinearLayout>
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layoutDirection="rtl"
+              android:orientation="horizontal"
+              android:layout_margin="@dimen/text_margin"
+              >
+              <TextView
+                  android:text="ژانر :"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="@dimen/medium_font"
+                  android:textColor="@color/purple_500"
+                  />
+             <Spinner
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:background="@drawable/edittext"
+
+                 android:id="@+id/manga_ganra"
+/>
+
+          </LinearLayout>
+
+
+          <Button
+              android:layout_width="200dp"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/text_margin"
+              android:text="ثبت "
+              android:layout_gravity="center"
+              android:textSize="@dimen/medium_font"
+              android:id="@+id/add_manga_submit"
+              android:textColor="@color/white"
+
+              />
+
+
+      </LinearLayout>
+
+
+
+
+
+  </RelativeLayout>
+
+</FrameLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="@dimen/standard"
+    android:layout_marginTop="4dp"
+    android:layout_marginRight="@dimen/standard"
+    android:layout_marginBottom="4dp"
+    android:background="#80FFFFFF"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="5dp">
+    <ImageView
+        android:id="@+id/students_item_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/standard"
+        android:layout_gravity="left"
+
+        android:layout_marginBottom="@dimen/standard"
+        android:adjustViewBounds="true"
+        />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/standard">
+
+
+
+        <TextView
+            android:id="@+id/manga_item_name"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:padding="@dimen/standard"
+            tools:text="manga_name"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/small_font"
+            android:textColor="@color/purple_500"/>
+
+
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

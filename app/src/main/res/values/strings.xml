@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">MangaReader</string>
+    <string name="UserName_L">نام کاربری :</string>
+    <string name="Password_L">کلمه ی عبور :</string>
+    <string name="Email_L">ایمیل :</string>
+    <string name="Home_Tab">خانه </string>
+    <string name="Translator"> مترجم ها </string>
+    <string name="Category">دسته بندی </string>
+    <string name="Profile">پروفایل </string>
+    <string name="Horror">ترسناک</string>
+    <string name="Drama">درام</string>
+    <string name="Fantasy">فانتزی</string>
+    <string name="History">تاریخی</string>
+    <string name="Criminal">جنایی</string>
+    <string name="Exciting">هیجان انگیز </string>
+    <string name="UserMangaList">لیست مانگا ها </string>
+    <string name="submit">ثبت </string>
+    <string name="image_Loader">بارگذازی تصویر</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="underline_text_login"><u>برای ایجاد حساب کاربری اینجا کیلیک کنید </u></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
