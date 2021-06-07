@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
             setProfileInfo();
 
 
-
         }
         loadFragment(tabsFragment);
         setDrawer();
@@ -55,8 +55,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setProfileInfo() {
-        userName = findViewById(R.id.UserName_main);
-        profile = findViewById(R.id.profile_main);
+        View view = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        userName = view.findViewById(R.id.UserName_main);
+        profile = view.findViewById(R.id.profile_main);
         User user = SharePerfrence.getInstance(this).getUser();
         userName.setText(user.getId());
         String base64String = (String) user.getImage().toString();
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void navSetUp(Context context) {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

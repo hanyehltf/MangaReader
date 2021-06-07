@@ -8,16 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.project.mangareader.DatabaseManagment.LoginDB;
 import com.project.mangareader.DatabaseManagment.SharePerfrence;
 import com.project.mangareader.DatabaseManagment.User;
 import com.project.mangareader.Home.MainActivity;
-
-import org.w3c.dom.Text;
 
 public class Login extends AppCompatActivity {
     private EditText userName;

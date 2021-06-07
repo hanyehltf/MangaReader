@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.project.mangareader.DatabaseManagment.SharePerfrence;
-import com.project.mangareader.DatabaseManagment.SignUpDB;
 import com.project.mangareader.DatabaseManagment.User;
 import com.project.mangareader.Home.MainActivity;
 
