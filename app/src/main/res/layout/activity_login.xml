@@ -1,78 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
     android:background="@color/teal_700"
-   >
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerInParent="true">
+    tools:context=".Login">
 
-        <EditText
-            android:id="@+id/login_user_name"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:background="@drawable/edittext"
-        android:hint="نام کاربری "
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/purple_500"
-        android:textSize="@dimen/medium_font"
-
-        />
-        <EditText
-            android:id="@+id/login_password"
-            android:layout_width="200dp"
-            android:layout_gravity="center"
-            android:layout_height="50dp"
-            android:background="@drawable/edittext"
-            android:hint="رمز عبور  "
-            android:gravity="center"
-            android:layout_marginTop="@dimen/standard"
-            android:textColor="@color/purple_500"
-            android:textSize="@dimen/medium_font"
-            />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-
-
-        <Button
-            android:id="@+id/login_submit"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:text="@string/submit"
-
-            android:background="@color/purple_500"
-            android:textColor="@color/white"
-            android:textSize="@dimen/medium_font"
-            />
-
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="@dimen/small_font"
-            android:id="@+id/gotosignup"
-            android:textColor="@color/white"
-            android:textColorLink="@color/white"
-            android:text="@string/underline_text_login"
-            android:layout_marginTop="50dp"
-            />
-    </LinearLayout>
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/login_user_name"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="@drawable/edittext"
+                android:gravity="center"
+                android:hint="نام کاربری "
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/medium_font"
+
+                />
+
+            <EditText
+                android:id="@+id/login_password"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/standard"
+                android:background="@drawable/edittext"
+                android:gravity="center"
+                android:hint="رمز عبور  "
+                android:textColor="@color/purple_500"
+                android:textSize="@dimen/medium_font" />
 
 
+            <Button
+                android:id="@+id/login_submit"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/fab_margin"
+android:backgroundTint="@color/purple_500"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_font" />
 
 
+            <TextView
+                android:id="@+id/gotosignup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:text="@string/underline_text_login"
+                android:textColor="@color/white"
+                android:textColorLink="@color/white"
+                android:textSize="@dimen/small_font" />
+        </LinearLayout>
 
 
     </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

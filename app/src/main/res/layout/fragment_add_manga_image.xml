@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".profileInformation.dummy.AddMangaImageFragment">
+
+    <Button
+        android:id="@+id/load_slide_manga"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/standard"
+        android:layout_marginTop="@dimen/standard"
+        android:layout_marginRight="@dimen/standard"
+        android:backgroundTint="@color/teal_700"
+        android:text="بارگذاری"
+        android:textSize="@dimen/medium_font"
+
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/addimagerecyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:scrollbars="vertical"
+
+        />
+
+    <Button
+        android:id="@+id/submit_add_manga"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/teal_700"
+        android:text="ثبت"
+        android:textSize="@dimen/medium_font"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="50dp"/>
+
+</FrameLayout>

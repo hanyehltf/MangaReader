@@ -1,4 +1,4 @@
-package com.project.mangareader.profileInformation.dummy;
+package com.project.mangareader.Home;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,29 +13,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.project.mangareader.R;
-import com.project.mangareader.profileInformation.dummy.dummy.DummyContent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
  */
-public class MangaItemsFragment extends Fragment {
+public class CategoryFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private int mColumnCount = 2;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public MangaItemsFragment() {
+    public CategoryFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static MangaItemsFragment newInstance(int columnCount) {
-        MangaItemsFragment fragment = new MangaItemsFragment();
+    public static CategoryFragment newInstance(int columnCount) {
+        CategoryFragment fragment = new CategoryFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -54,7 +54,14 @@ public class MangaItemsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_manga_items_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        List<String> categories = new ArrayList<>();
+
+        categories.add("جنایی");
+        categories.add("معمایی");
+        categories.add("عاشفانه");
+        categories.add("ترسناک");
+
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -65,7 +72,9 @@ public class MangaItemsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS));
+
+
+            recyclerView.setAdapter(new MycategoryRecyclerViewAdapter(categories));
         }
         return view;
     }

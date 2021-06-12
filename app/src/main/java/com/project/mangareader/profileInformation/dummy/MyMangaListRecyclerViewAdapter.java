@@ -2,25 +2,26 @@ package com.project.mangareader.profileInformation.dummy;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.project.mangareader.DatabaseManagment.Manga;
 import com.project.mangareader.R;
-import com.project.mangareader.profileInformation.dummy.dummy.DummyContent.DummyItem;
+
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+public class MyMangaListRecyclerViewAdapter extends RecyclerView.Adapter<MyMangaListRecyclerViewAdapter.ViewHolder> {
 
-    public MyItemRecyclerViewAdapter(List<DummyItem> items) {
+    private final List<Manga> mValues;
+
+    public MyMangaListRecyclerViewAdapter(List<Manga> items) {
         mValues = items;
     }
 
@@ -33,9 +34,12 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-
-        holder.mContentView.setText(mValues.get(position).content);
+        Manga manga = mValues.get(position);
+        holder.mContentView.setText(manga.getName());
+        String pathImage = manga.getCover();
+        byte data[] = android.util.Base64.decode(pathImage, android.util.Base64.DEFAULT);
+        Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+        holder.cover.setImageBitmap(bmp);
     }
 
     @Override
@@ -45,15 +49,14 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-
+        public final ImageView cover;
         public final TextView mContentView;
-        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mContentView = (TextView) view.findViewById(R.id.manga_item_name);
+            cover = view.findViewById(R.id.manga_item_avatar);
         }
 
         @Override

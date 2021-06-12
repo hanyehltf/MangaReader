@@ -7,20 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.project.mangareader.Home.dummy.DummyContent.DummyItem;
 import com.project.mangareader.R;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
+
 public class MycategoryRecyclerViewAdapter extends RecyclerView.Adapter<MycategoryRecyclerViewAdapter.ViewHolder> {
+    List<String> mValues;
 
-    private final List<DummyItem> mValues;
 
-    public MycategoryRecyclerViewAdapter(List<DummyItem> items) {
+    public MycategoryRecyclerViewAdapter(List<String> items) {
         mValues = items;
     }
 
@@ -34,8 +30,7 @@ public class MycategoryRecyclerViewAdapter extends RecyclerView.Adapter<Mycatego
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position));
     }
 
     @Override
@@ -47,13 +42,13 @@ public class MycategoryRecyclerViewAdapter extends RecyclerView.Adapter<Mycatego
         public final View mView;
 
         public final TextView mContentView;
-        public DummyItem mItem;
+        public String mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
 
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mContentView = (TextView) view.findViewById(R.id.ganra_item_category);
         }
 
         @Override

@@ -25,7 +25,7 @@
               >
               <ImageView
                   android:layout_gravity="center|top"
-                  android:id="@+id/manga_picture"
+                  android:id="@+id/manga_cover"
 
                   android:layout_width="100dp"
                   android:layout_height="100dp"
@@ -44,6 +44,8 @@
     android:textSize="@dimen/medium_font"
     android:id="@+id/add_manga_load_pic"
     android:textColor="@color/white"
+    android:backgroundTint="@color/teal_700"
+
 
     />
 
@@ -132,11 +134,13 @@
               android:layout_width="200dp"
               android:layout_height="wrap_content"
               android:layout_margin="@dimen/text_margin"
-              android:text="ثبت "
+              android:text="مرحله بعد "
               android:layout_gravity="center"
               android:textSize="@dimen/medium_font"
-              android:id="@+id/add_manga_submit"
+              android:id="@+id/next_level_submit"
               android:textColor="@color/white"
+              android:backgroundTint="@color/teal_700"
+
 
               />
 

@@ -5,8 +5,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -17,18 +19,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.widget.Toolbar;
 
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
+import com.project.mangareader.AddMangaForUser;
 import com.project.mangareader.DatabaseManagment.SharePerfrence;
 import com.project.mangareader.DatabaseManagment.User;
 import com.project.mangareader.R;
-import com.project.mangareader.profileInformation.dummy.About_us;
-import com.project.mangareader.profileInformation.dummy.AddMangaFragment;
-import com.project.mangareader.profileInformation.dummy.Contact_us;
-import com.project.mangareader.profileInformation.dummy.MangaItemsFragment;
+import com.project.mangareader.profileInformation.dummy.AboutUs;
+import com.project.mangareader.profileInformation.dummy.UserMangaListActivity;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -36,20 +37,21 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageView profile;
     private TextView userName;
-    TabsFragment tabsFragment = new TabsFragment();
+    private TabLayout tabLayout;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        navSetUp(this);
+        setDrawer();
         if (SharePerfrence.getInstance(this).isLoggedIn()) {
             setProfileInfo();
 
 
         }
-        loadFragment(tabsFragment);
-        setDrawer();
-        navSetUp(this);
 
 
     }
@@ -81,25 +83,31 @@ public class MainActivity extends AppCompatActivity {
                 switch (id) {
                     case R.id.about_us: {
 
-                        loadFragment(new About_us());
+                        Intent intent = new Intent(MainActivity.this, AboutUs.class);
+                        finish();
+                        startActivity(intent);
 
                     }
                     break;
 
                     case R.id.contact_us: {
 
-                        loadFragment(new Contact_us());
+                        SharePerfrence.getInstance(MainActivity.this).logout();
 
                     }
                     break;
 
                     case R.id.insert_manga: {
-                        loadFragment(new AddMangaFragment());
+                        Intent intent = new Intent(MainActivity.this, AddMangaForUser.class);
+                        finish();
+                        startActivity(intent);
 
                     }
                     break;
                     case R.id.your_manga_list: {
-                        loadFragment(new MangaItemsFragment());
+                        Intent intent = new Intent(MainActivity.this, UserMangaListActivity.class);
+                        finish();
+                        startActivity(intent);
 
 
                     }
@@ -117,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            loadFragment(tabsFragment);
             return true;
         }
 
@@ -126,10 +133,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDrawer() {
+        tabLayout = findViewById(R.id.tablayout_main);
+        tabLayout.addTab(tabLayout.newTab().setText("خانه"));
+        tabLayout.addTab(tabLayout.newTab().setText("کاتالوگ"));
+
+        ViewPager viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(new TabbarAdaptor(getSupportFragmentManager(), tabLayout.getTabCount()));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_main);
-
+        toolbar = findViewById(R.id.toolbar_main);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
-
+        setSupportActionBar(toolbar);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -137,9 +169,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, fragment);
-        transaction.commit();
-    }
+
 }

@@ -12,35 +12,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.project.mangareader.DatabaseManagment.DataBaseControler;
 import com.project.mangareader.R;
-import com.project.mangareader.Home.dummy.DummyContent;
 
-/**
- * A fragment representing a list of Items.
- */
-public class Manga_list_Home extends Fragment {
 
-    // TODO: Customize parameter argument names
+
+public class MangaListHome extends Fragment {
+    private DataBaseControler dataBaseControler;
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 2;
+    private Context context;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public Manga_list_Home() {
+
+    public MangaListHome(Context context) {
+        this.context = context;
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static Manga_list_Home newInstance(int columnCount) {
-        Manga_list_Home fragment = new Manga_list_Home();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,8 +42,8 @@ public class Manga_list_Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manga_list__home_list, container, false);
+        dataBaseControler = new DataBaseControler(context);
 
-        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
@@ -65,7 +52,9 @@ public class Manga_list_Home extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter2(DummyContent.ITEMS));
+            if (dataBaseControler.getMangas().size() != 0) {
+                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(dataBaseControler.getMangas()));
+            }
         }
         return view;
     }
