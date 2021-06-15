@@ -4,14 +4,28 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 import com.google.android.material.internal.ParcelableSparseArray;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.project.mangareader.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.lang.reflect.Type;
 import java.net.PortUnreachableException;
 import java.util.ArrayList;
@@ -42,9 +56,11 @@ public class DataBaseControler extends SQLiteOpenHelper {
             M_COVER + " TEXT  , " +
             M_IMAGES + "  TEXT ," +
             GENERA + " TEXT );";
+    private Context context;
 
     public DataBaseControler(Context context) {
         super(context, DATABASE_NAME, null, 2);
+        this.context = context;
     }
 
     @Override
@@ -117,13 +133,157 @@ public class DataBaseControler extends SQLiteOpenHelper {
 
     }
 
-    public List<Manga> getMangas() {
+    public List<Manga> getMangaFromString() {
+        List<Manga> mangaList = new ArrayList<>();
+        String json = getMangaFromJson();
 
-        AddMangaTask addMangaTask = new AddMangaTask(this);
-        List<Manga> mangaList = addMangaTask.getMangaList();
+        try {
+            JSONArray jsonArray = new JSONArray(json);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                for (int j = 0; j <= 3; j++) {
+                    Manga manga = new Manga();
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    manga.setName(jsonObject.getString("name"));
+                    manga.setGenera(jsonObject.getString("genera"));
+                    manga.setWriter(jsonObject.getString("writer"));
+                    manga.setCover(jsonObject.getString("cover"));
+                    manga.setImages(getImages());
+                    mangaList.add(manga);
+                }
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return mangaList;
     }
 
+
+    public List<String> getImages() {
+        List<String> stringList = new ArrayList<>();
+        String json = getImagesFromJson();
+
+
+
+                try {
+                    JSONArray jsonArray = new JSONArray(json);
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String image = new String();
+                        image = jsonArray.getString(i);
+                        stringList.add(image);
+
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+
+
+
+        return stringList;
+    }
+
+    public String getMangaFromJson() {
+
+        InputStream inputStream = context.getResources().openRawResource(R.raw.jsonfile);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+
+        Runnable runnable=new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    int n;
+                    while ((n = reader.read(buffer)) != -1) {
+                        writer.write(buffer, 0, n);
+                    }
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };runnable.run();
+
+        String jsonString = writer.toString();
+
+
+        return jsonString;
+
+
+    }
+
+    public String getImagesFromJson() {
+        InputStream inputStream = context.getResources().openRawResource(R.raw.images);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String jsonString = writer.toString();
+
+
+        return jsonString;
+    }
+
+    public List<Manga> getMangas() {
+        Gson gson = new Gson();
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        List<Manga> mangaList = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM  " + MANGA_T, null);
+
+        if (cursor.getCount() > 0 && cursor.moveToNext()) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Manga manga = new Manga();
+                manga.setName(cursor.getString(0));
+                manga.setWriter(cursor.getString(1));
+                manga.setCover(cursor.getString(2));
+                String images = cursor.getString(3);
+                manga.setGenera(cursor.getString(4));
+                Type type = new TypeToken<List<String>>() {
+                }.getType();
+                Log.i("input array", String.valueOf(images.getBytes()));
+                List<String> finalOutputString = gson.fromJson(images, type);
+                manga.setImages(finalOutputString);
+                mangaList.add(manga);
+
+
+                cursor.moveToNext();
+
+            }
+
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return mangaList;
+    }
 
 
     @Override

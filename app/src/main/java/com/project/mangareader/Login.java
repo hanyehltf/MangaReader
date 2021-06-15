@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.project.mangareader.DatabaseManagment.DataBaseControler;
 import com.project.mangareader.DatabaseManagment.SharePerfrence;
 import com.project.mangareader.DatabaseManagment.User;
 import com.project.mangareader.Home.MainActivity;
@@ -20,14 +22,14 @@ public class Login extends AppCompatActivity {
     private EditText password;
     private Button login;
     private TextView goSignUp;
-    private LoginDB loginDB;
+    DataBaseControler dataBaseControler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginDB = new LoginDB(this);
+        dataBaseControler = new DataBaseControler(this);
 
         if (SharePerfrence.getInstance(this).isLoggedIn()) {
             finish();
@@ -47,12 +49,37 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private void athentication() {
-        String username = userName.getText().toString();
+    private void athentication(String username, String Password) {
+        User user = dataBaseControler.login(username, Password);
+        if (user != null) {
+
+            setInformation(user);
+
+        } else {
+
+            Snackbar.make(findViewById(R.id.coordinator2), "نام کاربری یا رمز عبور پیدا نشد ", Snackbar.LENGTH_LONG).show();
+        }
+
+    }
+
+
+    private void setInformation(User user) {
+        SharePerfrence.getInstance(getApplicationContext()).userLogin(user);
+        finish();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
+    private void setView() {
+        userName = (EditText) findViewById(R.id.login_user_name);
+        password = (EditText) findViewById(R.id.login_password);
+        login = (Button) findViewById(R.id.login_submit);
+        goSignUp = (TextView) findViewById(R.id.gotosignup);
+
+        String Username = userName.getText().toString();
         String Password = password.getText().toString();
 
 
-        if (TextUtils.isEmpty(username)) {
+        if (TextUtils.isEmpty(Username)) {
             userName.setError("لطفا نام کاربری را وارد کنید ");
             userName.requestFocus();
 
@@ -63,33 +90,10 @@ public class Login extends AppCompatActivity {
             password.requestFocus();
 
         }
-        loginDB.login(username, Password, new LoginDB.login() {
-            @Override
-            public void onReceived(User user) {
-                if (user != null) {
-                    SharePerfrence.getInstance(getApplicationContext()).userLogin(user);
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-
-
-                } else {
-                    Toast.makeText(Login.this, "نام کاربری یا پسورد وجود ندارد  ", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-    }
-
-    private void setView() {
-        userName = (EditText) findViewById(R.id.login_user_name);
-        password = (EditText) findViewById(R.id.login_password);
-        login = (Button) findViewById(R.id.login_submit);
-        goSignUp = (TextView) findViewById(R.id.gotosignup);
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                athentication();
+                athentication(Username, Password);
             }
         });
     }

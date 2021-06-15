@@ -22,7 +22,7 @@ public class UserMangaListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_manga_list);
         setToolbar();
         setFragment();
-        back.findViewById(R.id.back_frommangaList);
+        back=findViewById(R.id.back_frommangaList);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

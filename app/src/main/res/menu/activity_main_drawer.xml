@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_info"/>
     <item
         android:id="@+id/contact_us"
-        android:title="تماس با ما  "
+        android:title="خروج از حساب کاریری  "
         android:icon="@drawable/ic_contact_support" />
 
 

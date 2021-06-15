@@ -15,6 +15,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,8 +74,7 @@ public class AddMangaFragment extends Fragment {
         ArrayAdapter arrayAdapter = new ArrayAdapter(context, R.layout.support_simple_spinner_dropdown_item, genera1);
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         genera_spinner.setAdapter(arrayAdapter);
-        genera = String.valueOf(genera_spinner.getSelectedItem());
-        load_cover.setOnClickListener(new View.OnClickListener() {
+    load_cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -98,6 +98,8 @@ public class AddMangaFragment extends Fragment {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+
+                genera = String.valueOf(genera_spinner.getSelectedItem());
                 manga.setCover(encodedImage);
                 manga.setName(m_name.getText().toString());
                 manga.setWriter(m_writer.getText().toString());

@@ -3,6 +3,7 @@ package com.project.mangareader.profileInformation.dummy;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,9 @@ public class setImagesRecyclerView extends RecyclerView.Adapter<setImagesRecycle
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        String image = images.get(position);
+        holder.image = images.get(position);
 
-        byte data[] = android.util.Base64.decode(image, android.util.Base64.DEFAULT);
+        byte data[] = Base64.decode(images.get(position), Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
         holder.mContentView.setImageBitmap(bmp);
     }
@@ -60,7 +61,7 @@ public class setImagesRecyclerView extends RecyclerView.Adapter<setImagesRecycle
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-
+        public String image;
         public final ImageView mContentView;
 
         public ViewHolder(View view) {

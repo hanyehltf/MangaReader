@@ -16,7 +16,6 @@ import com.project.mangareader.DatabaseManagment.DataBaseControler;
 import com.project.mangareader.R;
 
 
-
 public class MangaListHome extends Fragment {
     private DataBaseControler dataBaseControler;
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -52,8 +51,8 @@ public class MangaListHome extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            if (dataBaseControler.getMangas().size() != 0) {
-                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(dataBaseControler.getMangas()));
+            if (dataBaseControler.getMangaFromString().size() != 0) {
+                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(dataBaseControler.getMangaFromString()));
             }
         }
         return view;

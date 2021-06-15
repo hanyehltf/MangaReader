@@ -16,7 +16,6 @@ import com.project.mangareader.DatabaseManagment.DataBaseControler;
 import com.project.mangareader.R;
 
 
-
 public class MangaListFragment extends Fragment {
 
     DataBaseControler dataBaseControler;
@@ -37,16 +36,16 @@ public class MangaListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_manga_items, container, false);
+        View view = inflater.inflate(R.layout.fragment_manga_items_list, container, false);
         dataBaseControler = new DataBaseControler(context);
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            if (dataBaseControler.getMangas().size() != 0) {
-                recyclerView.setAdapter(new MyMangaListRecyclerViewAdapter(dataBaseControler.getMangas()));
-            }
+
+        Context context = view.getContext();
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        if (dataBaseControler.getMangaFromString().size() != 0) {
+            recyclerView.setAdapter(new MyMangaListRecyclerViewAdapter(dataBaseControler.getMangaFromString()));
         }
+
         return view;
     }
 }

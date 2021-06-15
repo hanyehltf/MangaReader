@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
@@ -19,10 +21,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
+import com.project.mangareader.AddMangaForUser;
+import com.project.mangareader.DatabaseManagment.AddToJsonFile;
 import com.project.mangareader.DatabaseManagment.DataBaseControler;
 import com.project.mangareader.DatabaseManagment.Manga;
 import com.project.mangareader.R;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -78,11 +85,18 @@ public class AddMangaImageFragment extends Fragment {
 
     private void setDatainDB() {
 
-        DataBaseControler dataBaseControler = new DataBaseControler(context);
-        dataBaseControler.AddManga(manga);
-        AppCompatActivity activity = (AppCompatActivity) getContext();
-        AddMangaFragment addMangaFragment = new AddMangaFragment(context);
-        activity.getSupportFragmentManager().beginTransaction().replace(R.id.addMangaFram, addMangaFragment, "Test Fragment").addToBackStack(null).commit();
+        //      DataBaseControler dataBaseControler = new DataBaseControler(context);
+        //     dataBaseControler.AddManga(manga);
+        AddToJsonFile addToJsonFile = new AddToJsonFile(context);
+        addToJsonFile.addMangaToJsonFile(manga, new AddToJsonFile.responce() {
+            @Override
+            public void responce(JSONObject jsonObject) {
+                AppCompatActivity activity = (AppCompatActivity) getContext();
+                AddMangaFragment addMangaFragment = new AddMangaFragment(context);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.addMangaFram, addMangaFragment, "Test Fragment").addToBackStack(null).commit();
+            }
+        });
+
     }
 
     private void getImages() {
@@ -154,7 +168,8 @@ public class AddMangaImageFragment extends Fragment {
                                     byteArrayBitmapStream);
                             byte[] b = byteArrayBitmapStream.toByteArray();
                             String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-                            manga.getImages().add(encodedImage);
+
+                            mArrayUri.add(encodedImage);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -171,14 +186,10 @@ public class AddMangaImageFragment extends Fragment {
     }
 
     private void setRecyclerview() {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                setImagesRecyclerView setImagesRecyclerView = new setImagesRecyclerView(context, mArrayUri);
-                recyclerView.setAdapter(setImagesRecyclerView);
-            }
-        };
-        runnable.run();
+
+        setImagesRecyclerView setImagesRecyclerView = new setImagesRecyclerView(context, mArrayUri);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
+        recyclerView.setAdapter(setImagesRecyclerView);
 
 
     }
@@ -195,9 +206,9 @@ public class AddMangaImageFragment extends Fragment {
     }
 
     private void setView() {
-        load_images = view.findViewById(R.id.load_slide_manga);
-        submit = view.findViewById(R.id.submit_add_manga);
-        recyclerView = view.findViewById(R.id.addimagerecyclerview);
+        load_images = (Button) view.findViewById(R.id.load_slide_manga);
+        submit = (Button) view.findViewById(R.id.submit_add_manga);
+        recyclerView = (RecyclerView) view.findViewById(R.id.addimagerecyclerview);
 
     }
 

@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("کاتالوگ"));
 
         ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new TabbarAdaptor(getSupportFragmentManager(), tabLayout.getTabCount()));
+        viewPager.setAdapter(new TabbarAdaptor(getSupportFragmentManager(), tabLayout.getTabCount(),this));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

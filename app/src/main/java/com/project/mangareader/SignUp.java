@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.project.mangareader.DatabaseManagment.DataBaseControler;
 import com.project.mangareader.DatabaseManagment.SharePerfrence;
 import com.project.mangareader.DatabaseManagment.User;
 import com.project.mangareader.Home.MainActivity;
@@ -30,7 +32,7 @@ public class SignUp extends AppCompatActivity {
     private Button Submit;
     private Uri ImageUri;
     private String encodedImage;
-    SignUpDB signUpDB;
+    DataBaseControler dataBaseControler;
     User user = new User();
 
     @Override
@@ -39,7 +41,7 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         setUp_View();
         insertDatatoDB();
-        signUpDB = new SignUpDB(this);
+        dataBaseControler = new DataBaseControler(this);
 
 
         profile.setOnClickListener(new View.OnClickListener() {
@@ -83,57 +85,42 @@ public class SignUp extends AppCompatActivity {
         Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-  if(Email.getText().toString()!=null && Password.getText().toString()!=null &&
-  UserName.getText().toString()!=null ){
+                if (Email.getText().toString() != null && Password.getText().toString() != null &&
+                        UserName.getText().toString() != null) {
 
-      setData();
-
-
-
-  }else {
-      Toast.makeText(SignUp.this,"لطفا فیلد هارا پر کنید ",Toast.LENGTH_LONG).show();
+                    setData();
 
 
-  }
+                } else {
+                    Snackbar.make(findViewById(R.id.coordinator1), "لطفا فیلد هارا پر کنید  ", Snackbar.LENGTH_LONG).show();
+
+
+                }
             }
         });
-
 
 
     }
 
 
-   public void setData(){
+    public void setData() {
 
-       user.setEmail(Email.getText().toString());
-       user.setPassword(Password.getText().toString());
-       user.setId(UserName.getText().toString());
-       user.setImage(encodedImage);
-       signUpDB.addDataToDatabase(user, new SignUpDB.signUp() {
-           @Override
-           public void onReceived(int status) {
-               switch (status) {
-                   case 0:
-                       Toast.makeText(SignUp.this, "عملیات با شکست مواجه شد ", Toast.LENGTH_LONG).show();
-                       break;
-                   case 1: {
-                       Toast.makeText(SignUp.this, "عملیات موفق امیز بود  ", Toast.LENGTH_LONG).show();
-                       setInformation(user);
-                   }
-                   break;
+        user.setEmail(Email.getText().toString());
+        user.setPassword(Password.getText().toString());
+        user.setId(UserName.getText().toString());
+        user.setImage(encodedImage);
 
-                   case 2:
-                       Toast.makeText(SignUp.this, "ایمیل یا نام کاربری وجود دارد  ", Toast.LENGTH_LONG).show();
-                       break;
+        Boolean statuse = dataBaseControler.signUp(user);
 
+        if (statuse != true) {
+            Snackbar.make(findViewById(R.id.coordinator1), "ثبت نام با موفقیت انجام نشد ", Snackbar.LENGTH_LONG).show();
 
-               }
-           }
-       });
+        } else {
 
+            setInformation(user);
+        }
 
-
-   }
+    }
 
     private void setInformation(User user) {
         SharePerfrence.getInstance(getApplicationContext()).userLogin(user);
@@ -163,7 +150,7 @@ public class SignUp extends AppCompatActivity {
 
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));
                 profile.setImageURI(ImageUri);
-                final int COMPRESSION_QUALITY = 100;
+                final int COMPRESSION_QUALITY = 0;
 
                 ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
