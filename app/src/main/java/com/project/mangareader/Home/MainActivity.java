@@ -44,11 +44,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                navSetUp(MainActivity.this);
+                setDrawer();
+            }
+        };
+        runnable.run();
 
-        navSetUp(this);
-        setDrawer();
+
         if (SharePerfrence.getInstance(this).isLoggedIn()) {
-            setProfileInfo();
+            Runnable runnable1 = new Runnable() {
+                @Override
+                public void run() {
+                    setProfileInfo();
+                }
+            };
+            runnable1.run();
 
 
         }
@@ -138,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("کاتالوگ"));
 
         ViewPager viewPager = findViewById(R.id.viewpager);
-        viewPager.setAdapter(new TabbarAdaptor(getSupportFragmentManager(), tabLayout.getTabCount(),this));
+        viewPager.setAdapter(new TabbarAdaptor(getSupportFragmentManager(), tabLayout.getTabCount(), this));
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

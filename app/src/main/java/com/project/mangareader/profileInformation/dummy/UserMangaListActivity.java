@@ -21,17 +21,21 @@ public class UserMangaListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_manga_list);
         setToolbar();
-        setFragment();
-        back=findViewById(R.id.back_frommangaList);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                setFragment();
+            }
+        };
+        runnable.run();
+
+        back = findViewById(R.id.back_frommangaList);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 HomePageLoader homePageLoader = new HomePageLoader(UserMangaListActivity.this);
             }
         });
-
-
-
 
 
     }

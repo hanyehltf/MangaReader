@@ -74,7 +74,7 @@ public class CategoryFragment extends Fragment {
             }
 
 
-            recyclerView.setAdapter(new MycategoryRecyclerViewAdapter(categories));
+            recyclerView.setAdapter(new MycategoryRecyclerViewAdapter(context,categories));
         }
         return view;
     }

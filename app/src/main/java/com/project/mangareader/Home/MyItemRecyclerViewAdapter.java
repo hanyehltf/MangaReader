@@ -2,6 +2,8 @@ package com.project.mangareader.Home;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -21,9 +23,11 @@ import java.util.List;
 public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<Manga> mValues;
+    private Context context;
 
-    public MyItemRecyclerViewAdapter(List<Manga> items) {
+    public MyItemRecyclerViewAdapter(List<Manga> items, Context context) {
         mValues = items;
+        this.context = context;
     }
 
     @Override
@@ -41,6 +45,20 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         byte data[] = android.util.Base64.decode(pathImage, android.util.Base64.DEFAULT);
         Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
         holder.cover.setImageBitmap(bmp);
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,ActivityMangaInfo.class);
+                intent.putExtra("name",manga.getName());
+                intent.putExtra("writer",manga.getWriter());
+                intent.putExtra("genera",manga.getGenera());
+                intent.putExtra("cover",manga.getCover());
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override

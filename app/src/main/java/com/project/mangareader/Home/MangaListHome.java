@@ -1,6 +1,7 @@
 package com.project.mangareader.Home;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -52,7 +53,15 @@ public class MangaListHome extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             if (dataBaseControler.getMangaFromString().size() != 0) {
-                recyclerView.setAdapter(new MyItemRecyclerViewAdapter(dataBaseControler.getMangaFromString()));
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
+
+                        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(dataBaseControler.getMangaFromString(),context));
+                    }
+                };
+                runnable.run();
+
             }
         }
         return view;

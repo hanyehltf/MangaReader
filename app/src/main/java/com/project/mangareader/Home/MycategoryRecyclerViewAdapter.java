@@ -2,6 +2,8 @@ package com.project.mangareader.Home;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,12 @@ import java.util.List;
 
 
 public class MycategoryRecyclerViewAdapter extends RecyclerView.Adapter<MycategoryRecyclerViewAdapter.ViewHolder> {
+    private Context context;
     List<String> mValues;
 
 
-    public MycategoryRecyclerViewAdapter(List<String> items) {
+    public MycategoryRecyclerViewAdapter(Context context, List<String> items) {
+        this.context = context;
         mValues = items;
     }
 
@@ -31,6 +35,21 @@ public class MycategoryRecyclerViewAdapter extends RecyclerView.Adapter<Mycatego
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mContentView.setText(mValues.get(position));
+
+
+        holder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, GeneraItemListActivity.class);
+                intent.putExtra("genera", holder.mItem);
+                context.startActivity(intent);
+
+            }
+
+
+        });
+
     }
 
     @Override
@@ -43,6 +62,7 @@ public class MycategoryRecyclerViewAdapter extends RecyclerView.Adapter<Mycatego
 
         public final TextView mContentView;
         public String mItem;
+
 
         public ViewHolder(View view) {
             super(view);

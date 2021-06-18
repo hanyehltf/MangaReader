@@ -9,12 +9,15 @@
 
     <application
         android:allowBackup="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MangaReader">
-        <activity android:name=".profileInformation.dummy.UserMangaListActivity"></activity>
+        <activity android:name=".Home.GeneraItemListActivity"></activity>
+        <activity android:name=".Home.ActivityMangaInfo" />
+        <activity android:name=".profileInformation.dummy.UserMangaListActivity" />
         <activity android:name=".AddMangaForUser" />
         <activity android:name=".profileInformation.dummy.AboutUs" />
         <activity android:name=".Login">

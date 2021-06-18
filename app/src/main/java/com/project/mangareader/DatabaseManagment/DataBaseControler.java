@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
@@ -136,7 +137,9 @@ public class DataBaseControler extends SQLiteOpenHelper {
     public List<Manga> getMangaFromString() {
         List<Manga> mangaList = new ArrayList<>();
         String json = getMangaFromJson();
-
+Runnable runnable=new Runnable() {
+    @Override
+    public void run() {
         try {
             JSONArray jsonArray = new JSONArray(json);
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -156,6 +159,9 @@ public class DataBaseControler extends SQLiteOpenHelper {
             e.printStackTrace();
         }
 
+    }
+};runnable.run();
+
         return mangaList;
     }
 
@@ -164,20 +170,26 @@ public class DataBaseControler extends SQLiteOpenHelper {
         List<String> stringList = new ArrayList<>();
         String json = getImagesFromJson();
 
+Runnable runnable=new Runnable() {
+    @Override
+    public void run() {
+        try {
+            JSONArray jsonArray = new JSONArray(json);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String image = new String();
+                image = jsonArray.getString(i);
+                stringList.add(image);
 
 
-                try {
-                    JSONArray jsonArray = new JSONArray(json);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        String image = new String();
-                        image = jsonArray.getString(i);
-                        stringList.add(image);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+};runnable.run();
 
 
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
 
 
@@ -191,6 +203,7 @@ public class DataBaseControler extends SQLiteOpenHelper {
         InputStream inputStream = context.getResources().openRawResource(R.raw.jsonfile);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
+     Thread thread=new Thread();
 
         Runnable runnable=new Runnable() {
             @Override
@@ -228,24 +241,31 @@ public class DataBaseControler extends SQLiteOpenHelper {
         InputStream inputStream = context.getResources().openRawResource(R.raw.images);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
+        Runnable runnable=new Runnable() {
+            @Override
+            public void run() {
+                try {
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+                    Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+                    int n;
+                    while ((n = reader.read(buffer)) != -1) {
+                        writer.write(buffer, 0, n);
+                    }
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
-        }
+        };runnable.run();
+
         String jsonString = writer.toString();
 
 

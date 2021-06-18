@@ -43,7 +43,14 @@ public class MangaListFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         if (dataBaseControler.getMangaFromString().size() != 0) {
-            recyclerView.setAdapter(new MyMangaListRecyclerViewAdapter(dataBaseControler.getMangaFromString()));
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    recyclerView.setAdapter(new MyMangaListRecyclerViewAdapter(dataBaseControler.getMangaFromString()));
+                }
+            };
+            runnable.run();
+
         }
 
         return view;
