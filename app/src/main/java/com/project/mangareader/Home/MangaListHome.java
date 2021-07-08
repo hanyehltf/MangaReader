@@ -1,14 +1,18 @@
 package com.project.mangareader.Home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +26,8 @@ public class MangaListHome extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     private int mColumnCount = 2;
     private Context context;
-
+    ProgressDialog progressDialog;
+    Handler handler = new Handler();
 
     public MangaListHome(Context context) {
         this.context = context;
@@ -52,15 +57,23 @@ public class MangaListHome extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            if (dataBaseControler.getMangaFromString().size() != 0) {
+
+            if (dataBaseControler.getMangas().size() == 0) {
+                dataBaseControler.AddManga();
+            }
+
+            if (dataBaseControler.getMangas().size() != 0) {
                 Runnable runnable = new Runnable() {
                     @Override
                     public void run() {
 
-                        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(dataBaseControler.getMangaFromString(),context));
+
+                        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(dataBaseControler.getMangas(), context));
+
                     }
                 };
                 runnable.run();
+
 
             }
         }

@@ -58,9 +58,9 @@ public class CategoryFragment extends Fragment {
         List<String> categories = new ArrayList<>();
 
         categories.add("جنایی");
-        categories.add("معمایی");
-        categories.add("عاشفانه");
-        categories.add("ترسناک");
+        categories.add("معمایی ");
+        categories.add("عاشقانه ");
+        categories.add("ترسناک ");
 
 
         // Set the adapter

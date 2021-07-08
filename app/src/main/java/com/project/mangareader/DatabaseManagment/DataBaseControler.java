@@ -128,120 +128,49 @@ public class DataBaseControler extends SQLiteOpenHelper {
     }
 
 
-    public void AddManga(Manga manga) {
-        AddMangaTask addMangaTask = new AddMangaTask(this, manga);
+    public void AddManga() {
+        AddMangaTask addMangaTask = new AddMangaTask(this,context);
         addMangaTask.execute();
 
     }
 
-    public List<Manga> getMangaFromString() {
-        List<Manga> mangaList = new ArrayList<>();
-        String json = getMangaFromJson();
-Runnable runnable=new Runnable() {
-    @Override
-    public void run() {
-        try {
-            JSONArray jsonArray = new JSONArray(json);
-            for (int i = 0; i < jsonArray.length(); i++) {
-                for (int j = 0; j <= 3; j++) {
-                    Manga manga = new Manga();
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    manga.setName(jsonObject.getString("name"));
-                    manga.setGenera(jsonObject.getString("genera"));
-                    manga.setWriter(jsonObject.getString("writer"));
-                    manga.setCover(jsonObject.getString("cover"));
-                    manga.setImages(getImages());
-                    mangaList.add(manga);
-                }
-
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-};runnable.run();
-
-        return mangaList;
-    }
 
 
     public List<String> getImages() {
         List<String> stringList = new ArrayList<>();
         String json = getImagesFromJson();
 
-Runnable runnable=new Runnable() {
-    @Override
-    public void run() {
-        try {
-            JSONArray jsonArray = new JSONArray(json);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONArray jsonArray=jsonObject.getJSONArray("images");
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        String image;
+                        image = jsonArray.getString(i);
+                        stringList.add(image);
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                String image = new String();
-                image = jsonArray.getString(i);
-                stringList.add(image);
 
-
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-};runnable.run();
-
-
-
-
-
+        };
+        runnable.run();
 
 
         return stringList;
     }
 
-    public String getMangaFromJson() {
 
-        InputStream inputStream = context.getResources().openRawResource(R.raw.jsonfile);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-     Thread thread=new Thread();
-
-        Runnable runnable=new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-                    int n;
-                    while ((n = reader.read(buffer)) != -1) {
-                        writer.write(buffer, 0, n);
-                    }
-
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } finally {
-                    try {
-                        inputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };runnable.run();
-
-        String jsonString = writer.toString();
-
-
-        return jsonString;
-
-
-    }
 
     public String getImagesFromJson() {
         InputStream inputStream = context.getResources().openRawResource(R.raw.images);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
-        Runnable runnable=new Runnable() {
+        Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -264,7 +193,8 @@ Runnable runnable=new Runnable() {
                     }
                 }
             }
-        };runnable.run();
+        };
+        runnable.run();
 
         String jsonString = writer.toString();
 
@@ -273,7 +203,6 @@ Runnable runnable=new Runnable() {
     }
 
     public List<Manga> getMangas() {
-        Gson gson = new Gson();
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         List<Manga> mangaList = new ArrayList<>();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM  " + MANGA_T, null);
@@ -285,13 +214,7 @@ Runnable runnable=new Runnable() {
                 manga.setName(cursor.getString(0));
                 manga.setWriter(cursor.getString(1));
                 manga.setCover(cursor.getString(2));
-                String images = cursor.getString(3);
                 manga.setGenera(cursor.getString(4));
-                Type type = new TypeToken<List<String>>() {
-                }.getType();
-                Log.i("input array", String.valueOf(images.getBytes()));
-                List<String> finalOutputString = gson.fromJson(images, type);
-                manga.setImages(finalOutputString);
                 mangaList.add(manga);
 
 
@@ -306,8 +229,24 @@ Runnable runnable=new Runnable() {
     }
 
 
+    public List<Manga> searchManga(String genera) {
+        List<Manga> mangaList = new ArrayList<>();
+        List<Manga> mangas = getMangas();
+        for (Manga manga : mangas) {
+            if (manga.getGenera() .equals( genera)) {
+                mangaList.add(manga);
+            }
+
+        }
+
+        return mangaList;
+    }
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+
 }

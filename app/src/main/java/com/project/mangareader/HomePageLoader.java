@@ -1,5 +1,6 @@
 package com.project.mangareader;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -10,6 +11,7 @@ public class HomePageLoader {
     public HomePageLoader(Context context){
         this.context=context;
         Intent intent=new Intent(context, MainActivity.class);
+        ((Activity)context).finish();
         context.startActivity(intent);
     }
 }

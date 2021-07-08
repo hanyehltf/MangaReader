@@ -2,6 +2,7 @@ package com.project.mangareader.Home;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ public class MycategoryRecyclerViewAdapter extends RecyclerView.Adapter<Mycatego
 
                 Intent intent = new Intent(context, GeneraItemListActivity.class);
                 intent.putExtra("genera", holder.mItem);
+                ((Activity)context).finish();
                 context.startActivity(intent);
 
             }

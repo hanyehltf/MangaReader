@@ -30,14 +30,7 @@ public class ActivityMangaInfo extends AppCompatActivity {
 
 
         setToolbar();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                setFragment();
-            }
-        };
-        runnable.run();
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         DataBaseControler dataBaseControler = new DataBaseControler(this);
         List<String> imageLis = dataBaseControler.getImages();
         manga = new Manga();
@@ -45,7 +38,16 @@ public class ActivityMangaInfo extends AppCompatActivity {
         manga.setWriter(intent.getStringExtra("writer"));
         manga.setCover(intent.getStringExtra("cover"));
         manga.setGenera(intent.getStringExtra("genera"));
+        intent.clone();
         manga.setImages(imageLis);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                setFragment();
+            }
+        };
+        runnable.run();
+
         back = findViewById(R.id.back_frommangainfo);
         back.setOnClickListener(new View.OnClickListener() {
             @Override

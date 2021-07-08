@@ -3,12 +3,17 @@ package com.project.mangareader.Home;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
 
 import com.project.mangareader.R;
 
@@ -38,10 +43,14 @@ public class MangaSliderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_manga_slider, container, false);
-        viewPager = (ViewPager) view.findViewById(R.id.mangaSlider);
+        RecyclerView recyclerView = view.findViewById(R.id.sliderRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         MangaSlideViewPager mangaSlideViewPager = new MangaSlideViewPager(context, imageList);
-        viewPager.setAdapter(mangaSlideViewPager);
+        if (imageList.size() != 0) {
+            recyclerView.setAdapter(mangaSlideViewPager);
+        }
         return view;
     }
 }

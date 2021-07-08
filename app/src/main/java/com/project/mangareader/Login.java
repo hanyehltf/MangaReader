@@ -51,13 +51,13 @@ public class Login extends AppCompatActivity {
 
     private void athentication(String username, String Password) {
         User user = dataBaseControler.login(username, Password);
-        if (user != null) {
+        if (user.getId()!=null && user.getImage()!=null &&user.getEmail()!=null) {
 
             setInformation(user);
 
         } else {
 
-            Snackbar.make(findViewById(R.id.coordinator2), "نام کاربری یا رمز عبور پیدا نشد ", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(R.id.coordinator5), "نام کاربری یا رمز عبور پیدا نشد ", Snackbar.LENGTH_LONG).show();
         }
 
     }

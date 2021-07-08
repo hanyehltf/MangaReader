@@ -25,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.project.mangareader.AddMangaForUser;
+import com.project.mangareader.DatabaseManagment.DataBaseControler;
 import com.project.mangareader.DatabaseManagment.SharePerfrence;
 import com.project.mangareader.DatabaseManagment.User;
 import com.project.mangareader.R;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView userName;
     private TabLayout tabLayout;
     private Toolbar toolbar;
+    private DataBaseControler dataBaseControler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -13,7 +13,7 @@
     app:cardElevation="5dp">
 
     <ImageView
-        android:id="@+id/manga_item_avatar"
+        android:id="@+id/manga_image_genera"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="left"
@@ -36,7 +36,7 @@
 
 
         <TextView
-            android:id="@+id/manga_item_name"
+            android:id="@+id/manga_item_genera"
             android:layout_width="wrap_content"
 
             android:layout_height="wrap_content"

@@ -21,9 +21,9 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_marginBottom="10dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
         android:id="@+id/homeList_cover"
         />
     <TextView
