@@ -39,9 +39,10 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        dataBaseControler = new DataBaseControler(this);
         setUp_View();
         insertDatatoDB();
-        dataBaseControler = new DataBaseControler(this);
+
 
 
         profile.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +77,7 @@ public class SignUp extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(email)) {
-            Email.setError("لطفا پسورد را وارد کنید ");
+            Email.setError("لطفا ایمیل را وارد کنید ");
             Email.requestFocus();
 
         }
@@ -151,12 +152,13 @@ public class SignUp extends AppCompatActivity {
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));
                 profile.setImageURI(ImageUri);
                 final int COMPRESSION_QUALITY = 0;
-
+                int nh = (int) (bitmap.getHeight() * (100.0 / bitmap.getWidth()) );
+                Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 100, nh, true);
                 ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
+                scaled.compress(Bitmap.CompressFormat.PNG, COMPRESSION_QUALITY,
                         byteArrayBitmapStream);
                 byte[] b = byteArrayBitmapStream.toByteArray();
-                encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+                encodedImage = Base64.encodeToString(b, Base64.NO_WRAP);
 
 
                 Toast.makeText(this, "     بارگزاری موفقیعت امیز بود    " + ImageUri, Toast.LENGTH_LONG).show();

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 
 import com.project.mangareader.DatabaseManagment.DataBaseControler;
@@ -40,6 +41,7 @@ public class GeneraItemListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 HomePageLoader homePageLoader = new HomePageLoader(GeneraItemListActivity.this);
+             
             }
         });
 
